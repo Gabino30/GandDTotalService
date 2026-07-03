@@ -251,11 +251,7 @@
 </head>
 <body>
 
-<audio id="bg-audio" loop preload="none">
-  <source src="background-music.mp3" type="audio/mpeg">
-</audio>
-
-<button type="button" id="audio-toggle" class="audio-toggle" aria-label="Play background music"></button>
+<button type="button" id="voice-toggle" class="audio-toggle playing" aria-label="Mute voice narration"></button>
 
 <header>
   <div class="wrap nav">
@@ -630,15 +626,30 @@ function applyDetail(btn, titleId, textId, visualId, iconSet){
 function showServiceDetail(btn){ applyDetail(btn, 'svc-detail-title', 'svc-detail-text', 'svc-detail-visual', serviceIcons); }
 function showProcessDetail(btn){ applyDetail(btn, 'proc-detail-title', 'proc-detail-text', 'proc-detail-visual', processIcons); }
 
+function speakItem(btn){
+  if(!('speechSynthesis' in window)) return;
+  if(voiceMuted) return;
+  var lang = document.documentElement.lang || 'en';
+  var title = btn.getAttribute('data-title-' + lang) || '';
+  var detail = btn.getAttribute('data-detail-' + lang) || '';
+  var text = title + '. ' + detail;
+  window.speechSynthesis.cancel();
+  var utter = new SpeechSynthesisUtterance(text);
+  utter.lang = lang === 'es' ? 'es-ES' : 'en-US';
+  utter.rate = 1;
+  utter.pitch = 1;
+  window.speechSynthesis.speak(utter);
+}
+
 document.querySelectorAll('#services .svc-item').forEach(function(btn){
   btn.addEventListener('mouseenter', function(){ showServiceDetail(btn); });
   btn.addEventListener('focus', function(){ showServiceDetail(btn); });
-  btn.addEventListener('click', function(){ showServiceDetail(btn); });
+  btn.addEventListener('click', function(){ showServiceDetail(btn); speakItem(btn); });
 });
 document.querySelectorAll('#process .svc-item').forEach(function(btn){
   btn.addEventListener('mouseenter', function(){ showProcessDetail(btn); });
   btn.addEventListener('focus', function(){ showProcessDetail(btn); });
-  btn.addEventListener('click', function(){ showProcessDetail(btn); });
+  btn.addEventListener('click', function(){ showProcessDetail(btn); speakItem(btn); });
 });
 showServiceDetail(document.querySelector('#services .svc-item'));
 showProcessDetail(document.querySelector('#process .svc-item'));
@@ -678,33 +689,27 @@ function setLang(lang){
   if(saved === 'es'){ setLang('es'); }
 })();
 
+var voiceMuted = false;
 (function(){
-  var audio = document.getElementById('bg-audio');
-  var btn = document.getElementById('audio-toggle');
-  if(!audio || !btn) return;
-  audio.volume = 0.15;
+  var btn = document.getElementById('voice-toggle');
+  if(!btn) return;
+  try{ voiceMuted = localStorage.getItem('gd-voice') === 'off'; }catch(e){}
 
   var iconOn = '<svg viewBox="0 0 24 24" fill="none"><path d="M4 9v6h4l5 5V4L8 9H4z" fill="#7ECBBD"/><path d="M16.5 8.5a5 5 0 010 7" stroke="#7ECBBD" stroke-width="1.8" stroke-linecap="round"/><path d="M19 6a9 9 0 010 12" stroke="#7ECBBD" stroke-width="1.8" stroke-linecap="round"/></svg>';
   var iconOff = '<svg viewBox="0 0 24 24" fill="none"><path d="M4 9v6h4l5 5V4L8 9H4z" fill="#B9C2C9"/><line x1="16" y1="9" x2="21" y2="14" stroke="#B9C2C9" stroke-width="1.8" stroke-linecap="round"/><line x1="21" y1="9" x2="16" y2="14" stroke="#B9C2C9" stroke-width="1.8" stroke-linecap="round"/></svg>';
 
-  var on = false;
-  try{ on = localStorage.getItem('gd-audio') === 'on'; }catch(e){}
-
   function render(){
-    btn.innerHTML = on ? iconOn : iconOff;
-    btn.classList.toggle('playing', on);
-    btn.setAttribute('aria-label', on ? 'Mute background music' : 'Play background music');
+    btn.innerHTML = voiceMuted ? iconOff : iconOn;
+    btn.classList.toggle('playing', !voiceMuted);
+    btn.setAttribute('aria-label', voiceMuted ? 'Turn on voice narration' : 'Mute voice narration');
   }
-  function setOn(state){
-    on = state;
-    if(on){ audio.play().catch(function(){ on = false; render(); }); }
-    else{ audio.pause(); }
-    try{ localStorage.setItem('gd-audio', on ? 'on' : 'off'); }catch(e){}
+  btn.addEventListener('click', function(){
+    voiceMuted = !voiceMuted;
+    if(voiceMuted && 'speechSynthesis' in window){ window.speechSynthesis.cancel(); }
+    try{ localStorage.setItem('gd-voice', voiceMuted ? 'off' : 'on'); }catch(e){}
     render();
-  }
-  btn.addEventListener('click', function(){ setOn(!on); });
+  });
   render();
-  if(on){ setOn(true); }
 })();
 </script>
 
