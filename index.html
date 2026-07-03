@@ -235,9 +235,27 @@
 
   footer{border-top:1px solid var(--line); padding:28px 0; font-size:12.5px; color:var(--text-dim);}
   .foot-row{display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;}
+
+  .audio-toggle{
+    position:fixed; right:22px; bottom:22px; z-index:60;
+    width:46px; height:46px; border-radius:50%;
+    background:rgba(27,35,45,.92); border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; box-shadow:0 4px 14px rgba(0,0,0,.3);
+    transition:border-color .15s, background .15s, transform .15s;
+  }
+  .audio-toggle:hover{ border-color:var(--copper); transform:translateY(-1px); }
+  .audio-toggle svg{width:20px; height:20px;}
+  .audio-toggle.playing{ border-color:var(--signal); }
 </style>
 </head>
 <body>
+
+<audio id="bg-audio" loop preload="none">
+  <source src="background-music.mp3" type="audio/mpeg">
+</audio>
+
+<button type="button" id="audio-toggle" class="audio-toggle" aria-label="Play background music"></button>
 
 <header>
   <div class="wrap nav">
@@ -658,6 +676,35 @@ function setLang(lang){
   var saved = null;
   try{ saved = localStorage.getItem('gd-lang'); }catch(e){}
   if(saved === 'es'){ setLang('es'); }
+})();
+
+(function(){
+  var audio = document.getElementById('bg-audio');
+  var btn = document.getElementById('audio-toggle');
+  if(!audio || !btn) return;
+  audio.volume = 0.15;
+
+  var iconOn = '<svg viewBox="0 0 24 24" fill="none"><path d="M4 9v6h4l5 5V4L8 9H4z" fill="#7ECBBD"/><path d="M16.5 8.5a5 5 0 010 7" stroke="#7ECBBD" stroke-width="1.8" stroke-linecap="round"/><path d="M19 6a9 9 0 010 12" stroke="#7ECBBD" stroke-width="1.8" stroke-linecap="round"/></svg>';
+  var iconOff = '<svg viewBox="0 0 24 24" fill="none"><path d="M4 9v6h4l5 5V4L8 9H4z" fill="#B9C2C9"/><line x1="16" y1="9" x2="21" y2="14" stroke="#B9C2C9" stroke-width="1.8" stroke-linecap="round"/><line x1="21" y1="9" x2="16" y2="14" stroke="#B9C2C9" stroke-width="1.8" stroke-linecap="round"/></svg>';
+
+  var on = false;
+  try{ on = localStorage.getItem('gd-audio') === 'on'; }catch(e){}
+
+  function render(){
+    btn.innerHTML = on ? iconOn : iconOff;
+    btn.classList.toggle('playing', on);
+    btn.setAttribute('aria-label', on ? 'Mute background music' : 'Play background music');
+  }
+  function setOn(state){
+    on = state;
+    if(on){ audio.play().catch(function(){ on = false; render(); }); }
+    else{ audio.pause(); }
+    try{ localStorage.setItem('gd-audio', on ? 'on' : 'off'); }catch(e){}
+    render();
+  }
+  btn.addEventListener('click', function(){ setOn(!on); });
+  render();
+  if(on){ setOn(true); }
 })();
 </script>
 
