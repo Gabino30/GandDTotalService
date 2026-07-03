@@ -131,21 +131,38 @@
     border-left:3px solid transparent;
     padding:18px 22px; cursor:pointer; width:100%;
     font-family:inherit; color:inherit;
-    transition:background .15s, border-color .15s;
+    transition:background .18s, border-color .18s;
   }
   .svc-item:last-child{border-bottom:none;}
-  .svc-item .num{font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--copper-bright); letter-spacing:.06em; padding-top:2px; flex-shrink:0;}
-  .svc-item h3{font-size:16px; margin-bottom:5px; color:var(--text-hi); transition:color .15s;}
+  .svc-item .num{
+    font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--text-dim);
+    flex-shrink:0; width:26px; height:26px; border-radius:50%;
+    border:1px solid var(--line); display:flex; align-items:center; justify-content:center;
+    transition:background .18s, border-color .18s, color .18s;
+  }
+  .svc-item h3{font-size:16px; margin-bottom:5px; color:var(--text-mid); transition:color .18s;}
   .svc-item p.short{font-size:13.5px; color:var(--text-dim); line-height:1.45;}
-  .svc-item:hover, .svc-item.active{ background:var(--panel-2); border-left-color:var(--copper); }
+  .svc-item:hover{ background:var(--panel-2); border-left-color:var(--signal); }
+  .svc-item.active{
+    background:linear-gradient(90deg, rgba(201,122,61,.16), rgba(92,179,164,.05));
+    border-left-color:var(--copper);
+  }
+  .svc-item.active .num{ background:var(--copper); border-color:var(--copper); color:var(--ink); font-weight:700; }
   .svc-item.active h3{ color:var(--copper-bright); }
   .svc-detail{
     background:var(--panel); border:1px solid var(--line); border-radius:10px;
-    padding:36px 34px; display:flex; flex-direction:column; justify-content:center;
+    padding:32px 34px; display:flex; flex-direction:column; justify-content:center;
     min-height:280px;
   }
   .svc-detail h3{font-size:25px; color:var(--text-hi); margin:12px 0 16px;}
   .svc-detail p{font-size:15.5px; color:var(--text-mid); line-height:1.75;}
+  .detail-visual{
+    width:100%; aspect-ratio:22/15; border-radius:12px;
+    background:var(--panel-2); border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center; overflow:hidden;
+    margin-bottom:20px;
+  }
+  .detail-visual svg{width:100%; height:100%;}
 
   /* ---------- why us ---------- */
   .why-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:28px;}
@@ -155,13 +172,7 @@
   .why-item h4{font-family:'Space Grotesk'; font-size:16px; color:var(--text-ink); margin-bottom:6px;}
   .why-item p{font-size:14px; color:#5B564C;}
 
-  /* ---------- process ---------- */
-  .process{display:flex; flex-direction:column; border:1px solid var(--line); border-radius:10px; overflow:hidden;}
-  .proc-row{display:grid; grid-template-columns:70px 1fr; gap:20px; padding:22px 26px; border-bottom:1px solid var(--line);}
-  .proc-row:last-child{border-bottom:none;}
-  .proc-row .step-no{font-family:'IBM Plex Mono', monospace; font-size:13px; color:var(--signal-bright);}
-  .proc-row h4{font-size:16px; color:var(--text-hi); margin-bottom:4px;}
-  .proc-row p{font-size:14px; color:var(--text-mid);}
+  /* ---------- process now reuses services-interactive / svc-list / svc-item / svc-detail ---------- */
 
   /* ---------- service area ---------- */
   .area-wrap{display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center;}
@@ -293,7 +304,7 @@
     </div>
     <div class="services-interactive">
       <div class="svc-list" role="tablist">
-        <button type="button" class="svc-item active"
+        <button type="button" class="svc-item active" data-icon="network"
           data-title-en="Networking &amp; Automation" data-title-es="Redes y Automatización"
           data-detail-en="We design and install home networks built for reliability — from whole-home Wi-Fi coverage to structured cabling for smart devices. Our automation setups let you control lighting, climate and connected devices from a single app, with clean configuration so everything works together, not as a stack of disconnected gadgets."
           data-detail-es="Diseñamos e instalamos redes domésticas pensadas para ser confiables — desde cobertura Wi-Fi en toda la casa hasta cableado estructurado para dispositivos inteligentes. Nuestras instalaciones de automatización te permiten controlar luces, clima y dispositivos conectados desde una sola aplicación, con una configuración limpia para que todo funcione en conjunto, no como aparatos sueltos.">
@@ -303,7 +314,7 @@
             <p class="short" data-en="Home network installation, connected devices and home automation so everything runs from one place." data-es="Instalación de redes domésticas, dispositivos conectados y automatización del hogar para que todo funcione desde un solo lugar.">Home network installation, connected devices and home automation so everything runs from one place.</p>
           </div>
         </button>
-        <button type="button" class="svc-item"
+        <button type="button" class="svc-item" data-icon="entertainment"
           data-title-en="Home Entertainment" data-title-es="Entretenimiento en Casa"
           data-detail-en="From flat, cable-free TV mounts to fully calibrated home theater and surround sound systems, we handle every layer of the installation — wall reinforcement, in-wall wiring, receiver setup and acoustic placement — so the finished room looks intentional and sounds the way it was designed to."
           data-detail-es="Desde montajes de TV planos y sin cables a la vista hasta sistemas de home theater y sonido envolvente totalmente calibrados, nos encargamos de cada capa de la instalación — refuerzo de pared, cableado empotrado, configuración del receptor y ubicación acústica — para que el resultado se vea intencional y suene tal como fue diseñado.">
@@ -313,7 +324,7 @@
             <p class="short" data-en="TV mounting, sound systems and home theater setup, with clean cabling and configuration tailored to the space." data-es="Montaje de televisores, sistemas de sonido y home theater, con cableado limpio y configuración a la medida del espacio.">TV mounting, sound systems and home theater setup, with clean cabling and configuration tailored to the space.</p>
           </div>
         </button>
-        <button type="button" class="svc-item"
+        <button type="button" class="svc-item" data-icon="security"
           data-title-en="Security" data-title-es="Seguridad"
           data-detail-en="We install and configure connected camera systems with remote viewing, motion alerts and secure storage options, positioned for real coverage of entry points and blind spots — not just placed for show. Every system is tested on-site before we consider the job done."
           data-detail-es="Instalamos y configuramos sistemas de cámaras conectadas con visualización remota, alertas de movimiento y opciones de almacenamiento seguro, ubicadas para cubrir de verdad los puntos de entrada y ángulos ciegos — no solo por apariencia. Cada sistema se prueba en sitio antes de dar el trabajo por terminado.">
@@ -323,7 +334,7 @@
             <p class="short" data-en="Installation of connected cameras and surveillance systems, built to monitor your property from anywhere." data-es="Instalación de cámaras y sistemas de vigilancia conectados, pensados para monitorear tu propiedad desde donde estés.">Installation of connected cameras and surveillance systems, built to monitor your property from anywhere.</p>
           </div>
         </button>
-        <button type="button" class="svc-item"
+        <button type="button" class="svc-item" data-icon="appliance"
           data-title-en="Appliance Maintenance" data-title-es="Mantenimiento de Electrodomésticos"
           data-detail-en="Regular maintenance catches small issues — a failing seal, a clogged line, a worn belt — before they become expensive repairs or full replacements. We service major kitchen and laundry appliances on a preventive schedule, plus same-visit corrective repairs when something's already gone wrong."
           data-detail-es="El mantenimiento regular detecta problemas pequeños — un sello que falla, una línea obstruida, una banda desgastada — antes de que se conviertan en reparaciones costosas o reemplazos completos. Damos servicio preventivo a los principales electrodomésticos de cocina y lavandería, además de reparaciones correctivas en la misma visita cuando algo ya falló.">
@@ -333,7 +344,7 @@
             <p class="short" data-en="Preventive and corrective service for refrigerators, washers, dryers and dishwashers, extending their lifespan." data-es="Servicio preventivo y correctivo para refrigeradores, lavadoras, secadoras y lavavajillas, alargando su vida útil.">Preventive and corrective service for refrigerators, washers, dryers and dishwashers, extending their lifespan.</p>
           </div>
         </button>
-        <button type="button" class="svc-item"
+        <button type="button" class="svc-item" data-icon="consulting"
           data-title-en="Virtual Consulting" data-title-es="Consultoría Virtual"
           data-detail-en="Not every question needs a truck roll. For troubleshooting, setup guidance or a second opinion before you buy new equipment, we offer scheduled video consultations plus written guides you can reference later — a faster, lower-cost way to get expert input."
           data-detail-es="No toda pregunta necesita una visita técnica. Para diagnósticos, guía de configuración o una segunda opinión antes de comprar equipo nuevo, ofrecemos consultas por video agendadas más guías escritas que puedes consultar después — una forma más rápida y económica de tener apoyo experto.">
@@ -343,7 +354,7 @@
             <p class="short" data-en="Online consultations, tutorials and guides to solve technical questions without a visit." data-es="Consultas en línea, tutoriales y guías para resolver dudas técnicas sin necesidad de una visita.">Online consultations, tutorials and guides to solve technical questions without a visit.</p>
           </div>
         </button>
-        <button type="button" class="svc-item"
+        <button type="button" class="svc-item" data-icon="business"
           data-title-en="For Businesses" data-title-es="Para Negocios"
           data-detail-en="Growing businesses need reliable infrastructure without enterprise overhead. We handle network installs, security camera systems and AV setups for offices and commercial spaces, scoped to your size and budget, with the same technician-level attention we give residential clients."
           data-detail-es="Los negocios en crecimiento necesitan infraestructura confiable sin el costo de nivel empresarial. Nos encargamos de instalaciones de red, sistemas de cámaras de seguridad y equipos de audio/video para oficinas y espacios comerciales, ajustados a tu tamaño y presupuesto, con la misma atención técnica que damos a clientes residenciales.">
@@ -356,6 +367,7 @@
       </div>
 
       <div class="svc-detail">
+        <div class="detail-visual" id="svc-detail-visual"></div>
         <span class="eyebrow" data-en="In focus" data-es="En detalle">In focus</span>
         <h3 id="svc-detail-title">Networking &amp; Automation</h3>
         <p id="svc-detail-text">We design and install home networks built for reliability — from whole-home Wi-Fi coverage to structured cabling for smart devices. Our automation setups let you control lighting, climate and connected devices from a single app, with clean configuration so everything works together, not as a stack of disconnected gadgets.</p>
@@ -398,34 +410,55 @@
       <span class="eyebrow" data-en="How we work" data-es="Cómo trabajamos">How we work</span>
       <h2 data-en="From consultation to a system that just works" data-es="De la consulta a un sistema que simplemente funciona">From consultation to a system that just works</h2>
     </div>
-    <div class="process">
-      <div class="proc-row">
-        <span class="step-no">(1)</span>
-        <div>
-          <h4 data-en="Initial consultation" data-es="Consulta inicial">Initial consultation</h4>
-          <p data-en="We talk through what you need installed, repaired or maintained — in person or virtually." data-es="Conversamos sobre lo que necesitas instalar, reparar o mantener — en persona o de forma virtual.">We talk through what you need installed, repaired or maintained — in person or virtually.</p>
-        </div>
+    <div class="services-interactive">
+      <div class="svc-list" role="tablist">
+        <button type="button" class="svc-item active" data-icon="consult"
+          data-title-en="Initial Consultation" data-title-es="Consulta Inicial"
+          data-detail-en="Every project starts with a conversation, not a sales pitch. We ask about your space, your current setup and what's not working — whether that's over the phone, on a video call, or in person. By the end of this step you'll know exactly what to expect: scope, rough timeline and next steps, with no obligation to move forward."
+          data-detail-es="Cada proyecto empieza con una conversación, no con un discurso de ventas. Preguntamos sobre tu espacio, tu instalación actual y qué no está funcionando — ya sea por teléfono, videollamada o en persona. Al final de este paso sabrás exactamente qué esperar: alcance, tiempo estimado y próximos pasos, sin ningún compromiso de continuar.">
+          <span class="num">01</span>
+          <div>
+            <h3 data-en="Initial consultation" data-es="Consulta inicial">Initial consultation</h3>
+            <p class="short" data-en="We talk through what you need installed, repaired or maintained — in person or virtually." data-es="Conversamos sobre lo que necesitas instalar, reparar o mantener — en persona o de forma virtual.">We talk through what you need installed, repaired or maintained — in person or virtually.</p>
+          </div>
+        </button>
+        <button type="button" class="svc-item" data-icon="evaluate"
+          data-title-en="On-Site Evaluation" data-title-es="Evaluación en Sitio"
+          data-detail-en="A technician visits your home or business to see the space firsthand — existing wiring, network coverage, appliance condition, wall structure for mounts. We take measurements, note anything relevant, and confirm the right equipment and approach before any work begins, so there are no surprises on installation day."
+          data-detail-es="Un técnico visita tu casa o negocio para ver el espacio de primera mano — cableado existente, cobertura de red, estado de los electrodomésticos, estructura de la pared para montajes. Tomamos medidas, anotamos lo relevante y confirmamos el equipo y enfoque correctos antes de empezar cualquier trabajo, para que no haya sorpresas el día de la instalación.">
+          <span class="num">02</span>
+          <div>
+            <h3 data-en="On-site evaluation" data-es="Evaluación en sitio">On-site evaluation</h3>
+            <p class="short" data-en="We review the space, existing equipment and propose the most suitable solution." data-es="Revisamos el espacio, los equipos existentes y proponemos la solución más adecuada.">We review the space, existing equipment and propose the most suitable solution.</p>
+          </div>
+        </button>
+        <button type="button" class="svc-item" data-icon="install"
+          data-title-en="Installation or Repair" data-title-es="Instalación o Reparación"
+          data-detail-en="This is where the work happens: cabling routed cleanly, equipment mounted and configured, appliances repaired or serviced on-site. We test everything before we leave — video signal, network coverage, camera feeds, appliance cycles — and walk you through how to use what we've installed."
+          data-detail-es="Aquí es donde ocurre el trabajo: cableado bien enrutado, equipos montados y configurados, electrodomésticos reparados o revisados en sitio. Probamos todo antes de irnos — señal de video, cobertura de red, transmisión de cámaras, ciclos del electrodoméstico — y te explicamos cómo usar lo que instalamos.">
+          <span class="num">03</span>
+          <div>
+            <h3 data-en="Installation or repair" data-es="Instalación o reparación">Installation or repair</h3>
+            <p class="short" data-en="We do the work with care for cabling, aesthetics and how the finished system performs." data-es="Ejecutamos el trabajo con cuidado del cableado, la estética y el funcionamiento final del sistema.">We do the work with care for cabling, aesthetics and how the finished system performs.</p>
+          </div>
+        </button>
+        <button type="button" class="svc-item" data-icon="maintain"
+          data-title-en="Ongoing Maintenance" data-title-es="Mantenimiento Continuo"
+          data-detail-en="Technology and appliances perform best with regular attention. We follow up on a schedule that fits your equipment, catching small issues early and keeping firmware, connections and mechanical parts in good working order — so you're not troubleshooting alone months later."
+          data-detail-es="La tecnología y los electrodomésticos rinden mejor con atención regular. Damos seguimiento en un calendario que se ajusta a tu equipo, detectando problemas pequeños a tiempo y manteniendo firmware, conexiones y partes mecánicas en buen estado — para que no tengas que resolver problemas solo meses después.">
+          <span class="num">04</span>
+          <div>
+            <h3 data-en="Ongoing maintenance" data-es="Mantenimiento continuo">Ongoing maintenance</h3>
+            <p class="short" data-en="We follow up with preventive maintenance so your equipment and appliances keep running without surprises." data-es="Damos seguimiento preventivo para que tus equipos y electrodomésticos sigan funcionando sin sorpresas.">We follow up with preventive maintenance so your equipment and appliances keep running without surprises.</p>
+          </div>
+        </button>
       </div>
-      <div class="proc-row">
-        <span class="step-no">(2)</span>
-        <div>
-          <h4 data-en="On-site evaluation" data-es="Evaluación en sitio">On-site evaluation</h4>
-          <p data-en="We review the space, existing equipment and propose the most suitable solution." data-es="Revisamos el espacio, los equipos existentes y proponemos la solución más adecuada.">We review the space, existing equipment and propose the most suitable solution.</p>
-        </div>
-      </div>
-      <div class="proc-row">
-        <span class="step-no">(3)</span>
-        <div>
-          <h4 data-en="Installation or repair" data-es="Instalación o reparación">Installation or repair</h4>
-          <p data-en="We do the work with care for cabling, aesthetics and how the finished system performs." data-es="Ejecutamos el trabajo con cuidado del cableado, la estética y el funcionamiento final del sistema.">We do the work with care for cabling, aesthetics and how the finished system performs.</p>
-        </div>
-      </div>
-      <div class="proc-row">
-        <span class="step-no">(4)</span>
-        <div>
-          <h4 data-en="Ongoing maintenance" data-es="Mantenimiento continuo">Ongoing maintenance</h4>
-          <p data-en="We follow up with preventive maintenance so your equipment and appliances keep running without surprises." data-es="Damos seguimiento preventivo para que tus equipos y electrodomésticos sigan funcionando sin sorpresas.">We follow up with preventive maintenance so your equipment and appliances keep running without surprises.</p>
-        </div>
+
+      <div class="svc-detail">
+        <div class="detail-visual" id="proc-detail-visual"></div>
+        <span class="eyebrow" data-en="Step in focus" data-es="Paso en detalle">Step in focus</span>
+        <h3 id="proc-detail-title">Initial Consultation</h3>
+        <p id="proc-detail-text">Every project starts with a conversation, not a sales pitch. We ask about your space, your current setup and what's not working — whether that's over the phone, on a video call, or in person. By the end of this step you'll know exactly what to expect: scope, rough timeline and next steps, with no obligation to move forward.</p>
       </div>
     </div>
   </div>
@@ -484,10 +517,6 @@
           <span class="val" style="color:var(--text-ink);"><a href="mailto:Polarfria30@gmail.com" style="color:#8A4E24;">Gabino@ganddtotalservice.com</a></span>
         </div>
         <div class="info-row" style="border-color:#D8D3C4;">
-          <span class="lbl" style="color:#8A4E24;" data-en="Office" data-es="Oficina">Office</span>
-          <span class="val" style="color:var(--text-ink);">200 N Kimball Ave, Suite 211<br>Southlake, TX 76092</span>
-        </div>
-        <div class="info-row" style="border-color:#D8D3C4;">
           <span class="lbl" style="color:#8A4E24;" data-en="Hours" data-es="Horario">Hours</span>
           <span class="val" style="color:var(--text-ink);" data-en="Monday to Saturday, appointments scheduled in advance" data-es="Lunes a sábado, con citas coordinadas por adelantado">Monday to Saturday, appointments scheduled in advance</span>
         </div>
@@ -523,20 +552,49 @@
 </footer>
 
 <script>
-function showServiceDetail(btn){
+var serviceIcons = {
+  network: '<svg viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg"><line x1="14" y1="128" x2="206" y2="128" stroke="#31404E" stroke-width="2"/><circle cx="72" cy="60" r="11" fill="#F3EFE4"/><path d="M52,110 Q52,84 72,84 Q92,84 92,110 L92,122 L52,122 Z" fill="#F3EFE4"/><path d="M88,96 Q112,90 128,80" stroke="#F3EFE4" stroke-width="7" stroke-linecap="round" fill="none"/><circle cx="128" cy="80" r="5" fill="#F3EFE4"/><rect x="150" y="55" width="34" height="52" rx="5" stroke="#C97A3D" stroke-width="3" fill="none"/><circle cx="160" cy="90" r="2.4" fill="#7ECBBD"/><circle cx="170" cy="90" r="2.4" fill="#7ECBBD"/><path d="M156,48 Q167,38 178,48" stroke="#5CB3A4" stroke-width="3" stroke-linecap="round" fill="none"/><path d="M161,42 Q167,36 173,42" stroke="#5CB3A4" stroke-width="3" stroke-linecap="round" fill="none"/></svg>',
+  entertainment: '<svg viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg"><line x1="14" y1="128" x2="206" y2="128" stroke="#31404E" stroke-width="2"/><path d="M20,128 L20,108 Q20,98 34,98 L78,98 Q92,98 92,108 L92,128 Z" fill="#212B36" stroke="#31404E" stroke-width="2"/><circle cx="56" cy="82" r="11" fill="#F3EFE4"/><path d="M38,110 Q38,88 56,88 Q74,88 74,110 L74,118 L38,118 Z" fill="#F3EFE4"/><rect x="118" y="30" width="80" height="52" rx="4" stroke="#C97A3D" stroke-width="3" fill="none"/><line x1="148" y1="90" x2="168" y2="90" stroke="#C97A3D" stroke-width="3" stroke-linecap="round"/><path d="M132,64v-10M144,64v-18M158,64v-14M170,64v-22M182,64v-8" stroke="#5CB3A4" stroke-width="3" stroke-linecap="round"/></svg>',
+  security: '<svg viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg"><line x1="14" y1="128" x2="206" y2="128" stroke="#31404E" stroke-width="2"/><path d="M120,50 L160,20 L200,50" fill="none" stroke="#C97A3D" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><rect x="176" y="46" width="18" height="12" rx="2" fill="#5CB3A4"/><circle cx="185" cy="52" r="2.4" fill="#12181F"/><line x1="70" y1="128" x2="70" y2="52" stroke="#31404E" stroke-width="4"/><line x1="60" y1="112" x2="80" y2="112" stroke="#31404E" stroke-width="3"/><line x1="60" y1="92" x2="80" y2="92" stroke="#31404E" stroke-width="3"/><line x1="60" y1="72" x2="80" y2="72" stroke="#31404E" stroke-width="3"/><circle cx="70" cy="58" r="10" fill="#F3EFE4"/><path d="M52,98 Q52,74 70,74 Q88,74 88,98 L88,108 L52,108 Z" fill="#F3EFE4"/><path d="M84,80 Q120,64 150,54" stroke="#F3EFE4" stroke-width="6" stroke-linecap="round" fill="none"/><circle cx="150" cy="54" r="4.5" fill="#F3EFE4"/></svg>',
+  appliance: '<svg viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg"><line x1="14" y1="128" x2="206" y2="128" stroke="#31404E" stroke-width="2"/><rect x="140" y="34" width="58" height="94" rx="6" stroke="#C97A3D" stroke-width="3" fill="none"/><line x1="140" y1="56" x2="198" y2="56" stroke="#C97A3D" stroke-width="3"/><circle cx="169" cy="92" r="16" stroke="#5CB3A4" stroke-width="3" fill="none"/><circle cx="169" cy="92" r="5" fill="#7ECBBD"/><circle cx="56" cy="82" r="11" fill="#F3EFE4"/><path d="M34,122 Q34,96 56,96 Q78,96 78,122 L78,128 L34,128 Z" fill="#F3EFE4"/><path d="M74,104 Q100,98 116,92" stroke="#F3EFE4" stroke-width="7" stroke-linecap="round" fill="none"/><circle cx="116" cy="92" r="5" fill="#F3EFE4"/><path d="M108,84 l16,16" stroke="#C97A3D" stroke-width="4" stroke-linecap="round"/></svg>',
+  consulting: '<svg viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg"><line x1="14" y1="128" x2="206" y2="128" stroke="#31404E" stroke-width="2"/><rect x="20" y="110" width="72" height="6" rx="3" fill="#31404E"/><circle cx="56" cy="78" r="10" fill="#F3EFE4"/><path d="M38,110 Q38,88 56,88 Q74,88 74,110 Z" fill="#F3EFE4"/><path d="M120,58 L188,58 Q196,58 196,66 L196,96 Q196,104 188,104 L120,104 Q112,104 112,96 L112,66 Q112,58 120,58 Z" fill="none" stroke="#C97A3D" stroke-width="3"/><line x1="112" y1="112" x2="196" y2="112" stroke="#C97A3D" stroke-width="3" stroke-linecap="round"/><circle cx="154" cy="78" r="8" fill="#5CB3A4"/><path d="M142,96 Q154,86 166,96" stroke="#5CB3A4" stroke-width="4" stroke-linecap="round" fill="none"/></svg>',
+  business: '<svg viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg"><line x1="14" y1="128" x2="206" y2="128" stroke="#31404E" stroke-width="2"/><rect x="20" y="112" width="130" height="6" rx="3" fill="#31404E"/><circle cx="52" cy="82" r="10" fill="#F3EFE4"/><path d="M34,112 Q34,90 52,90 Q70,90 70,112 Z" fill="#F3EFE4"/><circle cx="112" cy="82" r="10" fill="#F3EFE4"/><path d="M94,112 Q94,90 112,90 Q130,90 130,112 Z" fill="#F3EFE4"/><rect x="168" y="40" width="34" height="72" rx="4" stroke="#C97A3D" stroke-width="3" fill="none"/><circle cx="177" cy="54" r="2.2" fill="#7ECBBD"/><circle cx="177" cy="66" r="2.2" fill="#7ECBBD"/><circle cx="177" cy="78" r="2.2" fill="#7ECBBD"/><line x1="188" y1="50" x2="196" y2="50" stroke="#5CB3A4" stroke-width="3" stroke-linecap="round"/><line x1="188" y1="62" x2="196" y2="62" stroke="#5CB3A4" stroke-width="3" stroke-linecap="round"/></svg>'
+};
+
+var processIcons = {
+  consult: '<svg viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg"><line x1="14" y1="128" x2="206" y2="128" stroke="#31404E" stroke-width="2"/><circle cx="66" cy="78" r="11" fill="#F3EFE4"/><path d="M46,120 Q46,94 66,94 Q86,94 86,120 L86,126 L46,126 Z" fill="#F3EFE4"/><circle cx="154" cy="78" r="11" fill="#C97A3D"/><path d="M134,120 Q134,94 154,94 Q174,94 174,120 L174,126 L134,126 Z" fill="#C97A3D"/><path d="M52,46 h32 a6 6 0 016 6 v10 a6 6 0 01-6 6 h-14 l-6 8 v-8 h-12 a6 6 0 01-6-6 v-10 a6 6 0 016-6 z" fill="none" stroke="#5CB3A4" stroke-width="2.5"/><path d="M140,46 h32 a6 6 0 016 6 v10 a6 6 0 01-6 6 h-12 v8 l-6-8 h-14 a6 6 0 01-6-6 v-10 a6 6 0 016-6 z" fill="none" stroke="#7ECBBD" stroke-width="2.5"/></svg>',
+  evaluate: '<svg viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg"><line x1="14" y1="128" x2="206" y2="128" stroke="#31404E" stroke-width="2"/><rect x="140" y="30" width="60" height="90" rx="4" stroke="#31404E" stroke-width="2" fill="none"/><line x1="150" y1="50" x2="190" y2="50" stroke="#31404E" stroke-width="2"/><line x1="150" y1="70" x2="190" y2="70" stroke="#31404E" stroke-width="2"/><line x1="150" y1="90" x2="176" y2="90" stroke="#31404E" stroke-width="2"/><circle cx="62" cy="76" r="11" fill="#F3EFE4"/><path d="M42,118 Q42,92 62,92 Q82,92 82,118 L82,126 L42,126 Z" fill="#F3EFE4"/><rect x="78" y="88" width="26" height="34" rx="3" fill="none" stroke="#C97A3D" stroke-width="3" transform="rotate(8 91 105)"/><line x1="83" y1="98" x2="99" y2="98" stroke="#C97A3D" stroke-width="2" transform="rotate(8 91 105)"/><line x1="83" y1="106" x2="99" y2="106" stroke="#C97A3D" stroke-width="2" transform="rotate(8 91 105)"/><circle cx="118" cy="60" r="12" stroke="#5CB3A4" stroke-width="3" fill="none"/><line x1="126" y1="68" x2="136" y2="78" stroke="#5CB3A4" stroke-width="3.5" stroke-linecap="round"/></svg>',
+  install: '<svg viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg"><line x1="14" y1="128" x2="206" y2="128" stroke="#31404E" stroke-width="2"/><line x1="150" y1="128" x2="150" y2="40" stroke="#31404E" stroke-width="4"/><line x1="140" y1="108" x2="160" y2="108" stroke="#31404E" stroke-width="3"/><line x1="140" y1="84" x2="160" y2="84" stroke="#31404E" stroke-width="3"/><line x1="140" y1="60" x2="160" y2="60" stroke="#31404E" stroke-width="3"/><circle cx="90" cy="66" r="11" fill="#F3EFE4"/><path d="M70,110 Q70,84 90,84 Q110,84 110,110 L110,120 L70,120 Z" fill="#F3EFE4"/><path d="M104,88 Q124,70 142,52" stroke="#F3EFE4" stroke-width="7" stroke-linecap="round" fill="none"/><circle cx="142" cy="52" r="5" fill="#F3EFE4"/><rect x="134" y="40" width="20" height="14" rx="3" fill="#C97A3D"/><circle cx="139" cy="47" r="1.8" fill="#12181F"/><circle cx="149" cy="47" r="1.8" fill="#12181F"/></svg>',
+  maintain: '<svg viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg"><line x1="14" y1="128" x2="206" y2="128" stroke="#31404E" stroke-width="2"/><circle cx="62" cy="78" r="11" fill="#F3EFE4"/><path d="M42,120 Q42,94 62,94 Q82,94 82,120 L82,126 L42,126 Z" fill="#F3EFE4"/><path d="M78,102 Q98,96 112,90" stroke="#F3EFE4" stroke-width="7" stroke-linecap="round" fill="none"/><circle cx="112" cy="90" r="5" fill="#F3EFE4"/><path d="M108,82a8 8 0 109 -9 8 8 0 00-9 9z" fill="none" stroke="#C97A3D" stroke-width="3"/><rect x="140" y="46" width="46" height="58" rx="4" fill="none" stroke="#31404E" stroke-width="2.5"/><path d="M148,60 l6 6 12-12" stroke="#5CB3A4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/><line x1="148" y1="80" x2="178" y2="80" stroke="#31404E" stroke-width="2.5"/><line x1="148" y1="90" x2="170" y2="90" stroke="#31404E" stroke-width="2.5"/></svg>'
+};
+
+function applyDetail(btn, titleId, textId, visualId, iconSet){
   var lang = document.documentElement.lang || 'en';
-  document.querySelectorAll('.svc-item').forEach(function(b){ b.classList.remove('active'); });
+  var group = btn.closest('.svc-list');
+  if(group){ group.querySelectorAll('.svc-item').forEach(function(b){ b.classList.remove('active'); }); }
   btn.classList.add('active');
-  var titleEl = document.getElementById('svc-detail-title');
-  var textEl = document.getElementById('svc-detail-text');
+  var titleEl = document.getElementById(titleId);
+  var textEl = document.getElementById(textId);
+  var visualEl = document.getElementById(visualId);
   if(titleEl) titleEl.innerHTML = btn.getAttribute('data-title-' + lang);
   if(textEl) textEl.innerHTML = btn.getAttribute('data-detail-' + lang);
+  if(visualEl) visualEl.innerHTML = iconSet[btn.getAttribute('data-icon')] || '';
 }
-document.querySelectorAll('.svc-item').forEach(function(btn){
+function showServiceDetail(btn){ applyDetail(btn, 'svc-detail-title', 'svc-detail-text', 'svc-detail-visual', serviceIcons); }
+function showProcessDetail(btn){ applyDetail(btn, 'proc-detail-title', 'proc-detail-text', 'proc-detail-visual', processIcons); }
+
+document.querySelectorAll('#services .svc-item').forEach(function(btn){
   btn.addEventListener('mouseenter', function(){ showServiceDetail(btn); });
   btn.addEventListener('focus', function(){ showServiceDetail(btn); });
   btn.addEventListener('click', function(){ showServiceDetail(btn); });
 });
+document.querySelectorAll('#process .svc-item').forEach(function(btn){
+  btn.addEventListener('mouseenter', function(){ showProcessDetail(btn); });
+  btn.addEventListener('focus', function(){ showProcessDetail(btn); });
+  btn.addEventListener('click', function(){ showProcessDetail(btn); });
+});
+showServiceDetail(document.querySelector('#services .svc-item'));
+showProcessDetail(document.querySelector('#process .svc-item'));
 
 function formatPhoneMask(el){
   var digits = el.value.replace(/\D/g,'').slice(0,10);
@@ -561,8 +619,10 @@ function setLang(lang){
   document.querySelectorAll('[data-lang-btn]').forEach(function(btn){
     btn.classList.toggle('active', btn.getAttribute('data-lang-btn') === lang);
   });
-  var activeSvc = document.querySelector('.svc-item.active') || document.querySelector('.svc-item');
+  var activeSvc = document.querySelector('#services .svc-item.active') || document.querySelector('#services .svc-item');
   if(activeSvc){ showServiceDetail(activeSvc); }
+  var activeProc = document.querySelector('#process .svc-item.active') || document.querySelector('#process .svc-item');
+  if(activeProc){ showProcessDetail(activeProc); }
   try{ localStorage.setItem('gd-lang', lang); }catch(e){}
 }
 (function(){
